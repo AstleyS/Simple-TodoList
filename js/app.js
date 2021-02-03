@@ -13,14 +13,12 @@ function addTodo(event) {
     todoDiv.classList.add('todo');
     
     const newTodo = document.createElement('li');
-    newTodo.innerText = 'hey';
+    newTodo.innerText = todoInput.value;
     newTodo.classList.add('todo-item');
-    
-    
+        
     const completedB = document.createElement('button');
     completedB.innerText = "Check";
     completedB.classList.add('complete-btn');
-    
     
     const deleteB = document.createElement('button');
     deleteB.innerText = "Delete";
@@ -31,4 +29,6 @@ function addTodo(event) {
     todoDiv.appendChild(deleteB);
     
     todoList.appendChild(todoDiv);
+
+    todoInput.value = '';
 }
