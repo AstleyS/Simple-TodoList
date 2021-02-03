@@ -1,9 +1,11 @@
-const todoInput = document.querySelector('.todo-input');
 const todoButton = document.querySelector('.todo-button');
+const todoInput = document.querySelector('.todo-input');
 const todoList = document.querySelector('.todo-list');
+const filter = document.querySelector('.filter')
 
 todoButton.addEventListener('click', addTodo);
 todoList.addEventListener('click', deleteOrCheck);
+filter.addEventListener('click', filterTodo);
 
 function addTodo(event) {
 
@@ -14,7 +16,7 @@ function addTodo(event) {
     todoDiv.classList.add('todo');
     
     const newTodo = document.createElement('li');
-    newTodo.innerText = todoInput.value;
+    newTodo.innerText = todoInput.value.trim();
     newTodo.classList.add('todo-item');
         
     const completedB = document.createElement('button');
@@ -40,9 +42,43 @@ function deleteOrCheck(event) {
     const todo = item.parentElement;
     switch(item.classList[0]) {
         case 'delete-btn':
-            todo.remove(); 
+            todo.classList.add('fall');
+            todo.addEventListener('transitionend', () => {
+                todo.remove(); 
+            })
             break;
         case 'complete-btn':
             todo.classList.toggle('completed');
+            break;
+        default:
+            console.log('btn not found');
     }
 }
+
+function filterTodo(event) {
+    const todos = document.querySelectorAll('.todo');
+    todos.forEach((todo) => {
+        if (todo.style !== undefined) {
+            switch(event.target.value) {
+                case 'all':
+                    todo.style.display = 'flex';
+                    break;
+                case 'completed':
+                    if (todo.classList.contains('completed'))
+                        todo.style.display = 'flex';
+                    else 
+                        todo.style.display = 'none';
+                    break;
+                case 'uncompleted':
+                    if (!todo.classList.contains('completed'))
+                        todo.style.display = 'flex';
+                    else 
+                        todo.style.display = 'none';
+                    break;
+                default:
+                    console.log('btn not found');
+            }
+        }
+    });
+}
+
