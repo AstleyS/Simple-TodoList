@@ -3,6 +3,7 @@ const todoButton = document.querySelector('.todo-button');
 const todoList = document.querySelector('.todo-list');
 
 todoButton.addEventListener('click', addTodo);
+todoList.addEventListener('click', deleteOrCheck);
 
 function addTodo(event) {
 
@@ -31,4 +32,17 @@ function addTodo(event) {
     todoList.appendChild(todoDiv);
 
     todoInput.value = '';
+}
+
+function deleteOrCheck(event) {
+    const item = event.target;
+
+    const todo = item.parentElement;
+    switch(item.classList[0]) {
+        case 'delete-btn':
+            todo.remove(); 
+            break;
+        case 'complete-btn':
+            todo.classList.toggle('completed');
+    }
 }
